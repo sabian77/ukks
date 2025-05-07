@@ -97,7 +97,8 @@ class SiswaResource extends Resource
 
 
                 Tables\Columns\IconColumn::make('status_pkl')
-                    ->boolean(),
+                    ->boolean()
+                    ,
                 // Tables\Columns\TextColumn::make('roles')
                 //     ->label('Role')
                 //     ->formatStateUsing(function ($state, $record) {

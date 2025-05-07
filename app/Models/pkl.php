@@ -23,6 +23,9 @@ class pkl extends Model
         return $this->belongsTo(guru::class);
     }
 
+
+
+    //mmebuat tiger
     public static function booted(): void {
         static::created(function (pkl $pkl) {
             $pkl->siswa()->update(['status_pkl' => '1']);

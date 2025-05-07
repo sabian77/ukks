@@ -53,17 +53,11 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles')
                     ->label('Role')
+                    //menampilkan role dengan format string
                     ->formatStateUsing(function ($state, $record) {
+                        //pada ini akan menampilkan role jika 2 akan menampilkan 2 role
                         return $record->getRoleNames()->join(', ');
                     }),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

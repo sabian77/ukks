@@ -14,14 +14,15 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('pkl')" :current="request()->routeIs('pkl')" wire:navigate>{{ __('Data PKL') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('siswa')" :current="request()->routeIs('siswa')" wire:navigate>{{ __('Data Siswa') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
-            <flux:navlist variant="outline">
+            <!-- <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('pkl')" :current="request()->routeIs('pkl')" wire:navigate>{{ __('Data PKL') }}</flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
+            </flux:navlist> -->
 
             <flux:spacer />
 

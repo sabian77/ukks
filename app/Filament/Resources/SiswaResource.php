@@ -60,7 +60,6 @@ class SiswaResource extends Resource
 
                  Forms\Components\FileUpload::make('foto')
                     ->label('Foto siswa')
-                    ->maxSize(5)
                     ->openable()
                     ->image()
                     ->required()
@@ -84,8 +83,8 @@ class SiswaResource extends Resource
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nis')
+                    ->label('NIS')  
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gender'),
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kontak')

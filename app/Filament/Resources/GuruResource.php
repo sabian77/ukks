@@ -54,6 +54,9 @@ class GuruResource extends Resource
                     ->required()
                     ->maxLength(255),
 
+                //menambah komponen livewire
+                Forms\Components\View::make('filament.resources.guru.livewire.guru-component'),
+
                 // //menambah roles
                 // Forms\Components\Select::make('roles')  
                 //     ->relationship('roles', 'name')

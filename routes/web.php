@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\pkl;
 use App\Models\siswa;
+use App\Models\guru;
+use App\Models\industri;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
@@ -15,6 +17,9 @@ Route::view('dashboard', 'dashboard')
 
 Route::view('/pkl',  'pkl', ['pkl' => pkl::all()])->name('pkl');
 Route::view('/siswa',  'siswa', ['siswa' => siswa::all()])->name('siswa');
+Route::view('/guru',  'guru', ['guru' => guru::all()])->name('guru');
+Route::view('/industri',  'industri', ['industri' => industri::all()])->name('industri');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

@@ -26,7 +26,9 @@
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $siswa->kontak }}</td>
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $siswa->email }}</td>
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">
-                                <img src="{{ asset('storage/' . $siswa->foto) }}" alt="Foto {{ $siswa->nama }}" class="h-12 w-12 rounded-full object-cover">
+                                <a href="{{ asset('storage/' . $siswa->foto) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $siswa->foto) }}" alt="Foto {{ $siswa->nama }}" class="h-12 w-12 aspect-square rounded-full object-cover">
+                                </a>
                             </td>
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">
                                 @if ($siswa->status_pkl == 0)

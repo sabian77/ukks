@@ -6,6 +6,7 @@ use App\Models\siswa;
 use App\Models\guru;
 use App\Models\industri;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,5 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
+Route::get('/users', [AuthController::class, 'index']);
 
 require __DIR__.'/auth.php';

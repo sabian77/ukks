@@ -35,6 +35,9 @@ class GuruResource extends Resource
                 Forms\Components\TextInput::make('nip')
                     ->label('NIP')
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'NIP ini sudah digunakan! Silakan masukkan NIP dengan benar.',
+                    ])
                     ->maxLength(18),
                 Forms\Components\Select::make('gender')
                     ->label('Jenis Kelamin')
@@ -48,10 +51,16 @@ class GuruResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'Kontak ini sudah digunakan! Silakan masukkan Kontak dengan benar.',
+                    ])
                     ->maxLength(15),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'Email ini sudah digunakan! Silakan masukkan email lain.',
+                    ])
                     ->maxLength(255),
 
                 //menambah komponen livewire

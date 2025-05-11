@@ -39,6 +39,9 @@ class SiswaResource extends Resource
                 Forms\Components\TextInput::make('nis')
                     ->label('NIS')
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'NIS ini sudah digunakan! Silakan masukkan NIS dengan benar.',
+                    ])
                     ->maxLength(5),
                 Forms\Components\Select::make('gender')
                     ->label('Jenis Kelamin')
@@ -52,16 +55,21 @@ class SiswaResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'Nomor ini sudah digunakan! Silakan masukkan nomor lain.',
+                    ])
                     ->maxLength(15),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'Email ini sudah digunakan! Silakan masukkan Email dengan benar.',
+                    ])
                     ->maxLength(255),
 
                  Forms\Components\FileUpload::make('foto')
                     ->label('Foto siswa')
                     ->openable()
-                    ->image()
                     ->required()
                     ->previewable(),
 

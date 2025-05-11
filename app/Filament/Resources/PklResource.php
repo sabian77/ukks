@@ -36,7 +36,7 @@ class PklResource extends Resource
                 ->required()
                 ->unique(table: Pkl::class, column: 'siswa_id')
                 ->validationMessages([
-                    'unique' => 'Siswa ini sudah terdaftar di PKL!',
+                    'unique' => 'Siswa ini sudah terdaftar input data pkl!',
                 ]),            
                 Forms\Components\Select::make('industri_id')
                     ->label('Industri')

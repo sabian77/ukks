@@ -31,9 +31,13 @@ class PklResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('siswa_id')
-                    ->label('Nama Siswa')
-                    ->relationship('siswa', 'nama')
-                    ->required(),
+                ->label('Nama Siswa')
+                ->relationship('siswa', 'nama')
+                ->required()
+                ->unique(table: Pkl::class, column: 'siswa_id')
+                ->validationMessages([
+                    'unique' => 'Siswa ini sudah terdaftar di PKL!',
+                ]),            
                 Forms\Components\Select::make('industri_id')
                     ->label('Industri')
                     ->relationship('industri', 'nama')

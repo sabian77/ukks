@@ -46,6 +46,7 @@ class IndustriResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
+                    ->unique(table: Industri::class, column: 'kontak')
                     ->validationMessages([
                         'unique' => 'Kontak ini sudah digunakan! Silakan masukkan Kontak dengan benar.',
                     ])
@@ -53,6 +54,7 @@ class IndustriResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(table: Industri::class, column: 'email')
                     ->validationMessages([
                         'unique' => 'Email ini sudah digunakan! Silakan masukkan email dengan benar.',
                     ])

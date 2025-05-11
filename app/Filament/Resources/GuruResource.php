@@ -35,6 +35,7 @@ class GuruResource extends Resource
                 Forms\Components\TextInput::make('nip')
                     ->label('NIP')
                     ->required()
+                    ->unique(table: Guru::class, column: 'nip')
                     ->validationMessages([
                         'unique' => 'NIP ini sudah digunakan! Silakan masukkan NIP dengan benar.',
                     ])
@@ -51,6 +52,7 @@ class GuruResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
+                    ->unique(table: Guru::class, column: 'kontak')
                     ->validationMessages([
                         'unique' => 'Kontak ini sudah digunakan! Silakan masukkan Kontak dengan benar.',
                     ])
@@ -58,6 +60,7 @@ class GuruResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(table: Guru::class, column: 'email')
                     ->validationMessages([
                         'unique' => 'Email ini sudah digunakan! Silakan masukkan email lain.',
                     ])

@@ -39,6 +39,7 @@ class SiswaResource extends Resource
                 Forms\Components\TextInput::make('nis')
                     ->label('NIS')
                     ->required()
+                    ->unique(table: Siswa::class, column: 'nis')
                     ->validationMessages([
                         'unique' => 'NIS ini sudah digunakan! Silakan masukkan NIS dengan benar.',
                     ])
@@ -55,6 +56,7 @@ class SiswaResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
+                    ->unique(table: Siswa::class, column: 'kontak')
                     ->validationMessages([
                         'unique' => 'Nomor ini sudah digunakan! Silakan masukkan nomor lain.',
                     ])
@@ -62,6 +64,7 @@ class SiswaResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(table: Siswa::class, column: 'email')
                     ->validationMessages([
                         'unique' => 'Email ini sudah digunakan! Silakan masukkan Email dengan benar.',
                     ])
@@ -102,7 +105,11 @@ class SiswaResource extends Resource
 
                 //image
 
-
+                Tables\Columns\BadgeColumn::make('status_pkl')
+                ->colors([
+                    '0' => 'danger',  // Merah = Belum PKL
+                    '1' => 'success', // Hijau = Sedang PKL
+                ]),
                 Tables\Columns\IconColumn::make('status_pkl')
                     ->boolean()
                     ,

@@ -10,6 +10,12 @@ class siswa extends Model
     use HasRoles;
     protected $fillable = ['nama', 'nis', 'gender', 'alamat', 'kontak', 'email','foto', 'status_pkl'];
 
+
+    public function getStatusPklLabelAttribute()
+    {
+        return $this->status_pkl ? 'Sedang PKL' : 'Belum PKL';
+    }
+
     public function pkl()
     {
         return $this->hasMany(pkl::class);

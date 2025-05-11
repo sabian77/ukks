@@ -11,6 +11,7 @@
                         <th class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">Gender</th>
                         <th class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">Alamat</th>
                         <th class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">Kontak</th>
+                        <th class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">Website</th>
                         <th class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">Email</th>
                     </tr>
                 </thead>
@@ -22,6 +23,7 @@
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $industri->gender }}</td>
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $industri->alamat }}</td>
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $industri->kontak }}</td>
+                            <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $industri->webite }}</td>
                             <td class="border border-neutral-300 dark:border-neutral-600 px-4 py-2">{{ $industri->email }}</td>
                         </tr>
                     @endforeach

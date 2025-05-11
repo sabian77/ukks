@@ -39,6 +39,11 @@ class IndustriResource extends Resource
                 Forms\Components\TextInput::make('alamat')
                     ->required()
                     ->maxLength(255),
+
+                Forms\Components\TextInput::make('website')
+                    ->required()
+                    ->prefix('https://')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
                     ->maxLength(15),
@@ -64,6 +69,8 @@ class IndustriResource extends Resource
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kontak')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('website')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),

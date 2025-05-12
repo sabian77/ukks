@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class guru extends Model
 {
     use HasRoles;
-    
+    protected $table = 'gurus';
     protected $fillable = ['nama', 'nip', 'gender', 'alamat', 'kontak', 'email'];
 
     public function pkl()

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class siswa extends Model
 {
@@ -19,5 +20,12 @@ class siswa extends Model
     public function pkl()
     {
         return $this->hasMany(pkl::class);
+    }
+
+    protected function foto(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($foto) => url('/storage/siswa/' . $foto),
+        );
     }
 }

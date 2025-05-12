@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Guru;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Industri;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class GuruController extends Controller
+class IndustriController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $guru = Guru::all();
-        return response()->json($guru);
-        
+        $industri = Industri::all();
+        return response()->json($industri);
     }
 
     /**
@@ -26,11 +25,11 @@ class GuruController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
-            'nip' => 'required|unique:gurus,nip',
-            'gender' => 'required',
+            'website' => 'required|url',
+            'bidang_usaha' => 'required',
             'alamat' => 'required',
-            'kontak' => 'required|unique:gurus,kontak',
-            'email' => 'required|email|unique:gurus,email',
+            'kontak' => 'required|unique:industris,kontak',
+            'email' => 'required|email|unique:industris,email',
         ]);
     
         // Jika validasi gagal, hentikan eksekusi dan berikan pesan error
@@ -42,16 +41,15 @@ class GuruController extends Controller
             ], 422);
         }
     
-        // Jika validasi berhasil, simpan data guru
-        $guru = Guru::create($request->all());
+        // Jika validasi berhasil, simpan data industri
+        $industri = Industri::create($request->all());
     
         return response()->json([
             'success' => true,
-            'message' => 'Data Guru Berhasil Disimpan!',
-            'guru' => $guru
+            'message' => 'Data industri Berhasil Disimpan!',
+            'industri' => $industri
         ], 201);
     }
-    
 
     /**
      * Display the specified resource.

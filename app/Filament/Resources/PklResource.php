@@ -35,20 +35,25 @@ class PklResource extends Resource
                 ->relationship('siswa', 'nama')
                 ->required()
                 ->unique(table: Pkl::class, column: 'siswa_id')
+                ->searchable() // Memungkinkan pencarian dalam dropdown
+                //->allowCustomValues() // Memungkinkan input manual selain data relasi
                 ->validationMessages([
-                    'unique' => 'Siswa ini sudah terdaftar input data pkl!',
+                    'unique' => 'Siswa ini sudah terdaftar input data PKL!',
                 ]),            
                 Forms\Components\Select::make('industri_id')
                     ->label('Industri')
                     ->relationship('industri', 'nama')
+                    ->searchable()
                     ->required(),
                 Forms\Components\Select::make('guru_id')
                     ->label('Guru Pembimbing')
+                    ->searchable()
                     ->relationship('guru', 'nama')
                     ->required(),
                 Forms\Components\DatePicker::make('mulai')
                     ->required(),
                 Forms\Components\DatePicker::make('selesai')
+                    ->after('mulai')
                     ->required(),
             ]);
     }

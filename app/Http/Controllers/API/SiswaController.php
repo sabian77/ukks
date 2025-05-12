@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Guru;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class GuruController extends Controller
+
+class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $guru = Guru::all();
-        return response()->json($guru);
-        
+        $siswa = Siswa::all();
+        return response()->json($siswa);
     }
 
     /**
@@ -26,11 +26,13 @@ class GuruController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
-            'nip' => 'required|unique:gurus,nip',
+            'nis' => 'required|unique:siswas,nis',
             'gender' => 'required',
             'alamat' => 'required',
-            'kontak' => 'required|unique:gurus,kontak',
-            'email' => 'required|email|unique:gurus,email',
+            'kontak' => 'required|unique:siswas,kontak',
+            'email' => 'required|email|unique:siswas,email',
+            'foto' => 'required',
+            'status_pkl' => 'nullable',
         ]);
     
         // Jika validasi gagal, hentikan eksekusi dan berikan pesan error
@@ -41,17 +43,20 @@ class GuruController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
+
+        //upload gambar
+        $foto = $request->file('foto');
+        $foto->storeAs('public/siswa', $foto->hashName());
     
-        // Jika validasi berhasil, simpan data guru
-        $guru = Guru::create($request->all());
+        // Jika validasi berhasil, simpan data siswa
+        $siswa = Siswa::create($request->all());
     
         return response()->json([
             'success' => true,
-            'message' => 'Data Guru Berhasil Disimpan!',
-            'guru' => $guru
+            'message' => 'Data Siswa Berhasil Disimpan!',
+            'siswa' => $siswa
         ], 201);
     }
-    
 
     /**
      * Display the specified resource.

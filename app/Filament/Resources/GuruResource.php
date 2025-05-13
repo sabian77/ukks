@@ -10,7 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -36,7 +36,7 @@ class GuruResource extends Resource
                 Forms\Components\TextInput::make('nip')
                     ->label('NIP')
                     ->required()
-                    ->unique(table: Guru::class, column: 'nip')
+                    ->unique(Guru::class, 'nip', ignoreRecord: true) 
                     ->validationMessages([
                         'unique' => 'NIP ini sudah digunakan! Silakan masukkan NIP dengan benar.',
                     ])
@@ -44,8 +44,8 @@ class GuruResource extends Resource
                 Forms\Components\Select::make('gender')
                     ->label('Jenis Kelamin')
                     ->options([
-                        'Laki-laki' => 'Laki-laki',     
-                        'Perempuan' => 'Perempuan'
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('alamat')
@@ -53,7 +53,7 @@ class GuruResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
-                    ->unique(table: Guru::class, column: 'kontak')
+                    ->unique(Guru::class, 'kontak', ignoreRecord: true) 
                     ->validationMessages([
                         'unique' => 'Kontak ini sudah digunakan! Silakan masukkan Kontak dengan benar.',
                     ])
@@ -61,7 +61,7 @@ class GuruResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->unique(table: Guru::class, column: 'email')
+                    ->unique(Guru::class,'email', ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'Email ini sudah digunakan! Silakan masukkan email lain.',
                     ])
@@ -86,7 +86,8 @@ class GuruResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('gender')
+                    ->formatStateUsing(fn ($state) => DB::select("SELECT getGenderCode(?) AS gender", [$state])[0]->gender),
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kontak')

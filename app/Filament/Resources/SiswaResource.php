@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\DB;
 
 class SiswaResource extends Resource
 {
@@ -39,7 +40,7 @@ class SiswaResource extends Resource
                 Forms\Components\TextInput::make('nis')
                     ->label('NIS')
                     ->required()
-                    ->unique(table: Siswa::class, column: 'nis')
+                    ->unique(Siswa::class, 'nis', ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'NIS ini sudah digunakan! Silakan masukkan NIS dengan benar.',
                     ])
@@ -47,8 +48,8 @@ class SiswaResource extends Resource
                 Forms\Components\Select::make('gender')
                     ->label('Jenis Kelamin')
                     ->options([
-                        'Laki-laki' => 'Laki-laki', 
-                        'Perempuan' => 'Perempuan'
+                        'L' => 'Laki-laki', 
+                        'P' => 'Perempuan'
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('alamat')
@@ -56,7 +57,7 @@ class SiswaResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kontak')
                     ->required()
-                    ->unique(table: Siswa::class, column: 'kontak')
+                    ->unique(Siswa::class,'kontak', ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'Nomor ini sudah digunakan! Silakan masukkan nomor lain.',
                     ])
@@ -64,7 +65,7 @@ class SiswaResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->unique(table: Siswa::class, column: 'email')
+                    ->unique(Siswa::class, 'email', ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'Email ini sudah digunakan! Silakan masukkan Email dengan benar.',
                     ])
@@ -96,6 +97,8 @@ class SiswaResource extends Resource
                 Tables\Columns\TextColumn::make('nis')
                     ->label('NIS')  
                     ->searchable(),
+                Tables\Columns\TextColumn::make('gender')
+                    ->formatStateUsing(fn ($state) => DB::select("SELECT getGenderCode(?) AS gender", [$state])[0]->gender),
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kontak')

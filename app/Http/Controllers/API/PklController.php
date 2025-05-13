@@ -78,7 +78,24 @@ class PklController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //menacri guru berdasar id
+        $pkl = Pkl::find($id);
+
+        //jika guru tidak ditemukan
+        if (!$pkl) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Pkl Tidak Ditemukan!',
+            ], 404);
+        }
+        //return data guru
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Pkl Berhasil Ditemukan!',
+            'pkl' =>$pkl
+        ], 200);
+            
+
     }
 
     /**
@@ -94,6 +111,16 @@ class PklController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+                //berdasar id
+        $pkl = Pkl::find($id);
+
+        //hapus data
+        $pkl->delete();
+
+        //retrun respone
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Pkl [' . $pkl->id . '] Berhasil Dihapus!',
+        ], 200);
     }
 }

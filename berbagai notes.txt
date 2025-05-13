@@ -1,0 +1,28 @@
+Langkah ampilkan data filament pada livewire larvael
+1. pada web.php tambahkkan:
+use App\Models\pkl;
+Route::view('/pkl',  'pkl', ['pkl' => pkl::all()])->name('pkl'); 
+Route:view untuk menampilkan file yg berada di resources/view
+/pkl itu slug untuk web kita 
+'pkl' adalaha file bladenya
+pkl::all() ambil semua data dari file model
+
+2.  lalu buka pada file sidebar.blade
+                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+
+ketik di atas nah route('dash....') itu route kita dalam endpoint routeis juga sama demikian navigate.. untuk memberi nama pada navbar Laravel 
+
+3. pada file yang dimau missal: pkl.blade.php
+        @foreach ($pkl as $pkl)
+            <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
+                {{ $pkl->siswa->nama }}
+            </div>
+        @endforeach
+
+$pkl utnuk memanggil model semenetara {{ $pkl->siswa->nama }} pada database 
+
+4. pada cli, 
+C:\laragon\www\ukk(main -> origin)
+λ php artisan make:controller API/GuruController --api
+pakai --api agar sudah generate template
+ 

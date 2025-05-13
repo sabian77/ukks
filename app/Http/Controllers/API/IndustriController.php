@@ -56,7 +56,24 @@ class IndustriController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //menacri industri berdasar id
+        $industri = Industri::find($id);
+
+        //jika industri tidak ditemukan
+        if (!$industri) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data industri Tidak Ditemukan!',
+            ], 404);
+        }
+        //return data industri
+        return response()->json([
+            'success' => true,
+            'message' => 'Data industri Berhasil Ditemukan!',
+            'industri' =>$industri
+        ], 200);
+            
+
     }
 
     /**
@@ -64,7 +81,43 @@ class IndustriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //menacri industri berdasar id
+        $industri = Industri::find($id);
+
+        //jika industri tidak ditemukan
+        if (!$industri) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data industri Tidak Ditemukan!',
+            ], 404);
+        }
+
+        //membuat validasi industri
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'website' => 'required|url',
+            'bidang_usaha' => 'required',
+            'alamat' => 'required',
+            'kontak' => 'required|unique:industris,kontak',
+            'email' => 'required|email|unique:industris,email',
+        ]);
+
+        //jika validasi gagal
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal! Silakan cek kembali input Anda.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        //jika validasi berhasil
+        $industri->update($request->all());     
+        return response()->json([
+            'success' => true,
+            'message' => 'Data industri Berhasil Diupdate!',
+            'industri' => $industri 
+        ]);
     }
 
     /**
@@ -72,6 +125,15 @@ class IndustriController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+                //berdasar id
+        $industri = industri::find($id);
+        //hapus data
+        $industri->delete();
+
+        //retrun respone
+        return response()->json([
+            'success' => true,
+            'message' => 'Data industri Berhasil Dihapus!',
+        ], 200);
     }
 }

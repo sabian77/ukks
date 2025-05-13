@@ -58,7 +58,24 @@ class GuruController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //menacri guru berdasar id
+        $guru = Guru::find($id);
+
+        //jika guru tidak ditemukan
+        if (!$guru) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Guru Tidak Ditemukan!',
+            ], 404);
+        }
+        //return data guru
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Guru Berhasil Ditemukan!',
+            'guru' =>$guru
+        ], 200);
+            
+
     }
 
     /**
@@ -66,7 +83,45 @@ class GuruController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //mencari guur by id
+        $guru = Guru::find($id);
+
+        //jika guru tidak ditemukan
+        if (!$guru) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Guru Tidak Ditemukan!',
+            ], 404);
+        }
+
+        //membuat validasi guru
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'nip' => 'required',
+            'gender' => 'required',
+            'alamat' => 'required',
+            'kontak' => 'required',
+            'email' => 'required',
+        ]);
+
+        //jika validasi gagal
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal! Silakan cek kembali input Anda.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        //jika validasi berhasil
+        $guru->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Guru Berhasil Diupdate!',
+            'guru' => $guru
+        ], 200);
+
     }
 
     /**
@@ -74,6 +129,16 @@ class GuruController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+                //berdasar id
+        $guru = guru::find($id);
+
+        //hapus data
+        $guru->delete();
+
+        //retrun respone
+        return response()->json([
+            'success' => true,
+            'message' => 'Data guru Berhasil Dihapus!',
+        ], 200);
     }
 }

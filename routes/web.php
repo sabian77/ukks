@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\pkl;
-use App\Models\siswa;
-use App\Models\guru;
-use App\Models\industri;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\AuthController;
 
@@ -16,10 +12,18 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('/pkl',  'pkl', ['pkl' => pkl::all()])->name('pkl');
-Route::view('/siswa',  'siswa', ['siswa' => siswa::all()])->name('siswa');
-Route::view('/guru',  'guru', ['guru' => guru::all()])->name('guru');
-Route::view('/industri',  'industri', ['industri' => industri::all()])->name('industri');
+
+//membuat ujicoba dengan role siswa dapat akses fe
+Route::get('/siswa', function () {
+    return "Siswa";
+})->middleware(['auth', 'verified','role:siswa','cek_user'])
+ ->name('siswa');
+
+//membuat peraturan role siswa dapat akses fe
+Route::middleware(['auth', 'verified', 'role:siswa', 'cek_user'])->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+});
+
 
 
 Route::middleware(['auth'])->group(function () {
@@ -30,6 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-Route::get('/users', [AuthController::class, 'index']);
+//Route::get('/users', [AuthController::class, 'index']);
 
 require __DIR__.'/auth.php';

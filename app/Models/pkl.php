@@ -26,10 +26,14 @@ class pkl extends Model
 
 
     //mmebuat tiger
-    public static function booted(): void {
-        static::created(function (pkl $pkl) {
-            $pkl->siswa()->update(['status_pkl' => '1']);
-        });
-    }
+    // public static function booted(): void {
+    //     static::created(function (pkl $pkl) {
+    //         $pkl->siswa()->update(['status_pkl' => '1']);
+    //     });
+
+    //     static::deleted(function (pkl $pkl) {
+    //         $pkl->siswa()->update(['status_pkl' => '0']);
+    //     });
+    // }
 }
 

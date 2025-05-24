@@ -12,9 +12,11 @@ class Index extends Component
     use WithPagination;
 
     public $nama, $bidang_usaha, $alamat, $kontak, $email, $website;
-    public $isOpen = false;  // <-- perbaikan ini
+    public $isOpen = false;
     public $rowPerPage = 3;
     public $search;
+
+    protected $listeners = ['industriCreated' => 'render']; // Menambahkan listener
 
     public function render()
     {
@@ -93,7 +95,8 @@ class Index extends Component
             session()->flash('success', 'Data industri berhasil disimpan!');
             $this->closeModal();
 
-            // Optional: reload page / refresh data jika perlu
+            // Emit event untuk memberitahu bahwa industri telah dibuat
+            $this->emit('industriCreated'); // Emit event setelah menyimpan
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());

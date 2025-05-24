@@ -19,7 +19,7 @@ class Index extends Component
 
     use WithPagination;
 
-    public $rowPerPage=3;
+    public $rowPerPage=10;
     public $search;
     public $userMail;
 
@@ -118,7 +118,9 @@ class Index extends Component
             $this->closeModal();
             $this->resetInputFields();
 
-            return redirect()->route('dashboard')->with('success', 'Data PKL berhasil disimpan dan status siswa  sedang pkl!');
+            $siswanama = $siswa->nama;
+
+            return redirect()->route('dashboard')->with('success', "Data PKL berhasil disimpan dan status $siswanama pkl!");
 
             
         }

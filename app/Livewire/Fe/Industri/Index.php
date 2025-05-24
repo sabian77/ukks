@@ -13,7 +13,7 @@ class Index extends Component
 
     public $nama, $bidang_usaha, $alamat, $kontak, $email, $website;
     public $isOpen = false;
-    public $rowPerPage = 3;
+    public $rowPerPage = 10;
     public $search;
 
     protected $listeners = ['industriCreated' => 'render']; // Menambahkan listener
@@ -76,11 +76,12 @@ class Index extends Component
 
             if ($exists) {
                 DB::rollBack();
-                session()->flash('error', 'Gagal: Nama industri sudah terdaftar.');
+                return redirect()->route('industri')->with('error', "Nama industri sudah ada di database!");
+                // session()->flash('error', 'Gagal: Nama industri sudah terdaftar.');
                 return;
             }
 
-            Industri::create([
+            $industri = Industri::create([
                 'nama' => $this->nama,
                 'bidang_usaha' => $this->bidang_usaha,
                 'alamat' => $this->alamat,
@@ -92,14 +93,17 @@ class Index extends Component
             DB::commit();
 
             $this->resetInputFields();
-            session()->flash('success', 'Data industri berhasil disimpan!');
+            //session()->flash('success', 'Data industri berhasil disimpan!');
+            $Namaindustri = $industri->nama;
+            return redirect()->route('industri')->with('success', "  berhasil menyimpan $Namaindustri di tabel industri!");
             $this->closeModal();
 
             // Emit event untuk memberitahu bahwa industri telah dibuat
             $this->emit('industriCreated'); // Emit event setelah menyimpan
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->route('industri')->with('error', "terjadi kesalahan: " . $e->getMessage());
+            // session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 }

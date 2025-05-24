@@ -91,7 +91,7 @@ class Index extends Component
         try {
             $siswa = Siswa::find($this->siswaId);
 
-            if ($siswa->status_lapor_pkl) {
+            if ($siswa->status_pkl) {
                 // session()->flash('error', 'Transaksi dibatalkan: Siswa sudah melapor.');
 
                 DB::rollBack();
@@ -118,7 +118,7 @@ class Index extends Component
             $this->closeModal();
             $this->resetInputFields();
 
-            return redirect()->route('dashboard')->with('success', 'Data PKL berhasil disimpan dan status siswa diperbarui!');
+            return redirect()->route('dashboard')->with('success', 'Data PKL berhasil disimpan dan status siswa  sedang pkl!');
 
             
         }

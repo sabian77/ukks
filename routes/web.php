@@ -20,7 +20,7 @@ Route::get('/siswa', function () {
  ->name('siswa');
 
 //membuat peraturan role siswa dapat akses fe
-Route::middleware(['auth', 'verified', 'role:siswa', 'cek_user'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:siswa ', 'cek_user'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('industri', 'industri')->name('industri');
 });

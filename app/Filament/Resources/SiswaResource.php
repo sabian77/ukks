@@ -62,14 +62,16 @@ class SiswaResource extends Resource
                         'unique' => 'Nomor ini sudah digunakan! Silakan masukkan nomor lain.',
                     ])
                     ->maxLength(15),
-                Forms\Components\TextInput::make('email')
-                    ->email()
+                Forms\Components\select::make('email')
+                    //->email()
                     ->required()
+                    ->searchable()
+                    ->relationship('user', 'email')
                     ->unique(Siswa::class, 'email', ignoreRecord: true)
                     ->validationMessages([
                         'unique' => 'Email ini sudah digunakan! Silakan masukkan Email dengan benar.',
-                    ])
-                    ->maxLength(255),
+                    ]),
+                    //->maxLength(255),
 
                  Forms\Components\FileUpload::make('foto')
                     ->label('Foto siswa')

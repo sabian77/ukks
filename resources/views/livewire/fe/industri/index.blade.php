@@ -54,7 +54,7 @@
             <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">No</th>
             <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Nama</th>
             <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Bidang Usaha</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Alamat</th>
+            <th class="px-8 py-2 border-b border-gray-200 text-left text-gray-600">Alamat</th>
             <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Kontak</th>
             <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Email</th>
             <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Website</th>

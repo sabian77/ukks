@@ -22,6 +22,11 @@ class siswa extends Model
         return $this->hasMany(pkl::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
+
     protected function foto(): Attribute
     {
         return Attribute::make(

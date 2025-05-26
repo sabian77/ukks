@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Illuminate\Support\Carbon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -60,6 +61,7 @@ class PklResource extends Resource
 
     public static function table(Table $table): Table
     {
+        
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('siswa.nama')
@@ -75,6 +77,9 @@ class PklResource extends Resource
                     ->date(),
                 Tables\Columns\TextColumn::make('selesai')
                     ->date(),
+                Tables\Columns\TextColumn::make('selisih_hari')
+                ->label('Durasi (Hari)')
+                ->getStateUsing(fn (Pkl $record) => Carbon::parse($record->mulai)->diffInDays(Carbon::parse($record->selesai))),
             ])
             ->filters([
                 //

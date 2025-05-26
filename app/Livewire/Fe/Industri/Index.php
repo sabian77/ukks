@@ -22,8 +22,8 @@ class Index extends Component
     {
         return view('livewire.fe.industri.index', [
             'industris' => $this->search === null
-                ? Industri::latest()->paginate($this->rowPerPage)
-                : Industri::latest()
+                ? Industri::oldest()->paginate($this->rowPerPage)
+                : Industri::oldest()
                     ->where('nama', 'like', '%' . $this->search . '%')
                     ->orWhere('bidang_usaha', 'like', '%' . $this->search . '%')
                     ->orWhere('alamat', 'like', '%' . $this->search . '%')

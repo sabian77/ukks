@@ -19,11 +19,13 @@ Route::get('/siswa', function () {
 })->middleware(['auth', 'verified','role:siswa','cek_user'])
  ->name('siswa');
 
+
 //membuat peraturan role siswa dapat akses fe
 Route::middleware(['auth', 'verified', 'role:siswa ', 'cek_user'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('industri', 'industri')->name('industri');
 });
+
 
 // Route::middleware(['auth', 'verified', 'role:guru', 'cek_guru'])->group(function () {
 //    Route::get('/guru', function (){

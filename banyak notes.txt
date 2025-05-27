@@ -54,3 +54,13 @@ Query OK, 0 rows affected (0.030 sec)
 - php artisan make:filament-user
 - php artisan shield:generate --all
 - php artisan shield:super-admin
+
+CREATE USER 'cloud13'@'%' IDENTIFIED BY 'stembayo';
+GRANT ALL PRIVILEGES ON ukks.* TO 'cloud13'@'%';
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/ukks/public
+
+        <Directory /var/www/html/ukks/public>
+                AllowOverride all
+        </Directory>

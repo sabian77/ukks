@@ -28,6 +28,7 @@ Route::get('/siswa', function () {
 
 Route::middleware(['auth', 'verified', 'role:siswa', 'cek_usesrs'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::view('pkl', 'pkl')->name('pkl');
     Route::view('industri', 'industri')->name('industri');
 });
 

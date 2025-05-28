@@ -57,6 +57,9 @@ Query OK, 0 rows affected (0.030 sec)
 
 CREATE USER 'cloud13'@'%' IDENTIFIED BY 'stembayo';
 GRANT ALL PRIVILEGES ON ukks.* TO 'cloud13'@'%';
+FLUSH PRIVILEGES;
+EXIT
+
 
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/html/ukks/public

@@ -102,125 +102,79 @@ new #[Layout('components.layouts.auth')] class extends Component {
             autocomplete="email"
             placeholder="email@example.com"
         />
-
+        
         <!-- NIS -->
-        <div class="space-y-2">
-            <label for="nis" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                <i class="fas fa-id-card text-blue-500 mr-2"></i>
-                {{ __('NIS') }} <span class="text-red-500">*</span>
-            </label>
-            <div class="relative">
-                <input 
-                    wire:model="nis"
-                    id="nis"
-                    type="text"
-                    required
-                    placeholder="{{ __('Masukkan Nomor Induk Siswa') }}"
-                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition duration-200"
-                />
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i class="fas fa-hashtag text-gray-400"></i>
-                </div>
-            </div>
+        <flux:input
+            wire:model="nis"
+            id="nis"
+            type="text"
+            required
+            placeholder="{{ __('Masukkan Nomor Induk Siswa') }}"
+            :label="__('NIS')"
+        />
             @error('nis')
                 <p class="text-red-500 text-sm mt-1 flex items-center">
                     <i class="fas fa-exclamation-circle mr-1"></i>
                     {{ $message }}
                 </p>
             @enderror
-        </div>
 
-        <!-- Gender -->
-        <div class="space-y-2">
-            <label for="gender" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                <i class="fas fa-venus-mars text-purple-500 mr-2"></i>
-                {{ __('Jenis Kelamin') }} <span class="text-red-500">*</span>
-            </label>
-            <div class="relative">
-                <select 
-                    wire:model="gender" 
-                    id="gender"
-                    required
-                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white appearance-none transition duration-200"
-                >
-                    <option value="">{{ __('Pilih Jenis Kelamin') }}</option>
-                    <option value="L"> {{ __('Laki-laki') }}</option>
-                    <option value="P"> {{ __('Perempuan') }}</option>
-                </select>
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i class="fas fa-user text-gray-400"></i>
-                </div>
-                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <i class="fas fa-chevron-down text-gray-400"></i>
-                </div>
-            </div>
-            @error('gender')
-                <p class="text-red-500 text-sm mt-1 flex items-center">
-                    <i class="fas fa-exclamation-circle mr-1"></i>
+                <!-- gender -->
+        <flux:select 
+            wire:model="gender" 
+            id="gender" 
+            required :label="__('Jenis Kelamin')">
+            <option value="">{{ __('Pilih Jenis Kelamin') }}</option>
+            <option value="L">{{ __('Laki-laki') }}</option>
+            <option value="P">{{ __('Perempuan') }}</option>
+        </flux:select>
+
+        @error('gender')
+            <p class="text-red-500 text-sm mt-1 flex items-center">
+                <i class="fas fa-exclamation-circle mr-1"></i>
                     {{ $message }}
-                </p>
-            @enderror
-        </div>
+            </p>
+         @enderror
 
         <!-- Alamat -->
-        <div class="space-y-2">
-            <label for="alamat" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                <i class="fas fa-map-marker-alt text-green-500 mr-2"></i>
-                {{ __('Alamat') }} <span class="text-red-500">*</span>
-            </label>
-            <div class="relative">
-                <textarea 
-                    wire:model="alamat"
-                    id="alamat"
-                    required
-                    rows="4"
-                    placeholder="{{ __('Masukkan alamat lengkap (Jalan, RT/RW, Kelurahan, Kecamatan, Kota)') }}"
-                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition duration-200 resize-vertical"
-                ></textarea>
-                <div class="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
-                    <i class="fas fa-home text-gray-400 mt-1"></i>
-                </div>
-            </div>
-            @error('alamat')
-                <p class="text-red-500 text-sm mt-1 flex items-center">
-                    <i class="fas fa-exclamation-circle mr-1"></i>
-                    {{ $message }}
-                </p>
-            @enderror
-        </div>
+        <flux:input
+            wire:model="alamat"
+            id="alamat"
+            :label="__('Alamat')"
+            type="email"
+            required
+            placeholder="Masukkan alamat lengkap "
+        />
 
-        <!-- Kontak -->
-        <div class="space-y-2">
-            <label for="kontak" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                <i class="fas fa-phone text-orange-500 mr-2"></i>
-                {{ __('Nomor Kontak') }} <span class="text-red-500">*</span>
-            </label>
-            <div class="relative">
-                <input 
-                    wire:model="kontak"
-                    id="kontak"
-                    type="tel"
-                    required
-                    placeholder="{{ __('Masukkan nomor telepon/HP (contoh: 08123456789)') }}"
-                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition duration-200"
-                />
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i class="fas fa-mobile-alt text-gray-400"></i>
-                </div>
-            </div>
-            @error('kontak')
-                <p class="text-red-500 text-sm mt-1 flex items-center">
-                    <i class="fas fa-exclamation-circle mr-1"></i>
-                    {{ $message }}
-                </p>
-            @enderror
-        </div>
+         @error('alamat')
+            <p class="text-red-500 text-sm mt-1 flex items-center">
+                <i class="fas fa-exclamation-circle mr-1"></i>
+                                    {{ $message }}
+            </p>
+        @enderror
+
+                <!-- Kontak -->
+        <flux:input
+            wire:model="kontak"
+            id="kontak"
+            :label="__('Kontak')"
+            type="tel"
+            required
+            placeholder="Masukkan nomor telepon/HP (contoh: 08123456789)"
+        />
+
+         @error('alamat')
+            <p class="text-red-500 text-sm mt-1 flex items-center">
+                <i class="fas fa-exclamation-circle mr-1"></i>
+                                    {{ $message }}
+            </p>
+        @enderror
 
         <!-- Foto -->
         <div class="space-y-2">
             <label for="foto" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 <i class="fas fa-camera text-indigo-500 mr-2"></i>
-                {{ __('Foto Siswa') }} <span class="text-red-500">*</span>
+                {{ __('Foto Siswa') }} 
             </label>
             <div class="flex items-center justify-center w-full">
                 <label for="foto" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 transition duration-200">

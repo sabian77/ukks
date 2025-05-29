@@ -30,6 +30,7 @@
                         <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Nama Siswa</th>
                         <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Industri</th>
                         <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Bidang Usaha</th>
+                        <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Guru </th>
                         <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Mulai</th>
                         <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Selesai</th>
                         <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Durasi (Hari)</th>
@@ -55,6 +56,7 @@
                             <td class="px-4 py-2 border-b border-gray-200">{{ $pkl->siswa->nama ?? '-' }}</td>
                             <td class="px-4 py-2 border-b border-gray-200">{{ $pkl->industri->nama ?? '-' }}</td>
                             <td class="px-4 py-2 border-b border-gray-200">{{ $pkl->industri->bidang_usaha ?? '-' }}</td>
+                            <td class="px-4 py-2 border-b border-gray-200">{{ $pkl->guru->nama }}</td>
                             <td class="px-4 py-2 border-b border-gray-200">{{ $pkl->mulai ?? '-' }}</td>
                             <td class="px-4 py-2 border-b border-gray-200">{{ $pkl->selesai ?? '-' }}</td>
                             <td class="px-4 py-2 border-b border-gray-200">{{ $durasi }}</td>

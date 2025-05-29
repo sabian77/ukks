@@ -120,7 +120,7 @@ class Index extends Component
 
             $siswanama = $siswa->nama;
 
-            return redirect()->route('pkl')->with('success', "Data PKL berhasil disimpan dan status $siswanama pkl!");
+            return redirect()->route('pkl')->with('success', "Data PKL berhasil disimpan dan status $siswanama lapor pkl!");
 
             
         }

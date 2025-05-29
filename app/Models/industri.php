@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class industri extends Model
+class Industri extends Model
 {
     protected $fillable =['nama', 'website', 'bidang_usaha', 'alamat', 'kontak', 'email'];
 
-    public function pkl()
+    public function Pkl()
     {
-        return $this->hasMany(pkl::class);
+        return $this->hasMany(Pkl::class);
     }
 
     // public function guru ()

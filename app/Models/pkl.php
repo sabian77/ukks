@@ -4,23 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pkl extends Model
+class Pkl extends Model
 {
     protected $fillable = ['siswa_id', 'industri_id', 'guru_id', 'mulai', 'selesai'];
 
     public function siswa ()
     {
-        return $this->belongsTo(siswa::class);
+        return $this->belongsTo(Siswa::class);
     }
 
     public function industri ()
     {
-        return $this->belongsTo(industri::class);
+        return $this->belongsTo(Industri::class);
     }
 
     public function guru ()
     {
-        return $this->belongsTo(guru::class);
+        return $this->belongsTo(Guru::class);
     }
 
 

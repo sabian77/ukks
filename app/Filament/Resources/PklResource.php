@@ -35,7 +35,7 @@ class PklResource extends Resource
                 ->label('Nama Siswa')
                 ->relationship('siswa', 'nama')
                 ->required()
-                ->unique(table: Pkl::class, column: 'siswa_id')
+                ->unique(ignoreRecord: true)
                 ->searchable() // Memungkinkan pencarian dalam dropdown
                 //->allowCustomValues() // Memungkinkan input manual selain data relasi
                 ->validationMessages([
@@ -48,7 +48,6 @@ class PklResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('guru_id')
                     ->label('Guru Pembimbing')
-                    ->searchable()
                     ->relationship('guru', 'nama')
                     ->required(),
                 Forms\Components\DatePicker::make('mulai')

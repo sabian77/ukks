@@ -102,12 +102,13 @@ class Index extends Component
 
             // Simpan data PKL
             Pkl::create([
-                'siswa_id'      => $this->siswaId,
-                'industri_id'   => $this->industriId,
-                'guru_id'       => $this->guruId ?: '-',
-                'mulai'         => $this->mulai,
-                'selesai'       => $this->selesai,
+                'siswa_id'    => $this->siswaId,
+                'industri_id' => $this->industriId,
+                'guru_id'     => $this->guruId ?: null, // Simpan NULL jika guru_id kosong
+                'mulai'       => $this->mulai,
+                'selesai'     => $this->selesai,
             ]);
+
 
             //trigger
             // Update status_lapor siswa

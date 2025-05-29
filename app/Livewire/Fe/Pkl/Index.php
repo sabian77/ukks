@@ -80,7 +80,7 @@ class Index extends Component
         $this->validate([
                 'siswaId'       => 'required',
                 'industriId'    => 'required',
-                'guruId'        => 'required',
+                'guruId'        => 'nullable',
                 'mulai'         => 'required|date',
                 'selesai'       => 'required|date|after:mulai',
             ]);
@@ -104,7 +104,7 @@ class Index extends Component
             Pkl::create([
                 'siswa_id'      => $this->siswaId,
                 'industri_id'   => $this->industriId,
-                'guru_id'       => $this->guruId,
+                'guru_id'       => $this->guruId ?: '-',
                 'mulai'         => $this->mulai,
                 'selesai'       => $this->selesai,
             ]);

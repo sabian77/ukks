@@ -20,6 +20,13 @@
         </div>
         {{-- ./Judul --}}
 
+        {{-- Form Searching --}}
+        <div class="flex justify-end items-center mt-6 mb-6">
+            <input wire:model.live="search" type="text" placeholder="Search ..." 
+                class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        </div>
+        {{-- ./Form Searching --}}
 
         {{-- Table PKL --}}
         <div class="overflow-x-auto">

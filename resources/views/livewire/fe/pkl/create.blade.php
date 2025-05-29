@@ -51,19 +51,7 @@
             </div>
           </fieldset>
 
-          <fieldset class="border border-gray-300 rounded-md p-4">
-            <legend class="text-lg text-gray-700 px-2">Guru Pembimbing</legend>
-            <div class="mb-4">
-              <select wire:model="guruId">
-                <option value="">Pilih Guru Pembimbing PKL</option>
-                  @foreach ($gurus as $guru)
-                    <option value="{{ $guru->id }}">{{ $guru->nama }}</option>
-                  @endforeach
-              </select>
-                  
-              @error('guruId') <span class="text-red-500">{{ $message }}</span>@enderror
-            </div>
-          </fieldset>
+
 
           <fieldset class="border border-gray-300 rounded-md p-4">
             <legend class="text-lg text-gray-700 px-2">Pelaksanaan PKL</legend>

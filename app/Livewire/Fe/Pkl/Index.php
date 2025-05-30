@@ -92,7 +92,7 @@ class Index extends Component
             $siswa = Siswa::find($this->siswaId);
 
             if ($siswa->status_pkl) {
-                // session()->flash('error', 'Transaksi dibatalkan: Siswa sudah melapor.');
+                // session()->flash('error', 'Gagal!! Siswa sudah melapor.');
 
                 DB::rollBack();
                 $this->closeModal();

@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'cek_usesrs' => \App\Http\Middleware\cek_usesrs::class
-        ]);
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

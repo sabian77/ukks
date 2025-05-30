@@ -67,3 +67,5 @@ EXIT
         <Directory /var/www/html/ukks/public>
                 AllowOverride all
         </Directory>
+
+ukk2025jaya

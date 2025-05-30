@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified', 'role:siswa', 'cek_usesrs'])->group(funct
 });
 
 
+
 // Route::middleware(['auth', 'verified', 'role:guru', 'cek_guru'])->group(function () {
 //    Route::get('/guru', function (){
 //     return "Guru";

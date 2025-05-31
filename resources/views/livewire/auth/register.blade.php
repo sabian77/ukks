@@ -18,62 +18,61 @@ new #[Layout('components.layouts.auth')] class extends Component {
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
-    public string $nis = '';
-    public string $gender = '';
-    public string $alamat = '';
-    public string $kontak = '';
-    public $foto;
 
     /**
      * Handle an incoming registration request.
      */
     public function register(): void
     {
-        $validated = $this->validate([
+        $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => [
+                'required', 
+                'string', 
+                'lowercase', 
+                'email', 
+                'max:255', 
+                'unique:' . User::class,
+                'exists:siswas,email' // Email harus terdaftar di tabel siswa
+            ],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-            'nis' => ['required', 'string', 'max:50', 'unique:siswas,nis'],
-            'gender' => ['required', 'in:L,P'],
-            'alamat' => ['required', 'string', 'max:255'],
-            'kontak' => ['required', 'string', 'max:50'],
-            'foto' => ['required', 'image', 'max:2048'], // maksimal 2MB
+        ], [
+            'email.exists' => 'Email tidak terdaftar sebagai siswa. Silakan hubungi admin.',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $validated = [
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->password,
+        ];
 
-        // Upload foto
-        $fotoPath = $this->foto->store('photos/siswa', 'public');
+        // Cari data siswa berdasarkan email
+        $siswa = Siswa::where('email', $validated['email'])->first();
+        
+        // Cek apakah email sudah digunakan untuk registrasi sebelumnya
+        if (User::where('email', $validated['email'])->exists()) {
+            $this->addError('email', 'Email ini sudah terdaftar dengan akun lain.');
+            return;
+        }
 
         // Simpan user ke tabel `users`
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => $validated['password'],
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => Hash::make($this->password),
         ]);
 
         // Berikan role "siswa" menggunakan Shield
         $user->assignRole('siswa');
 
-        // Simpan data siswa ke tabel `siswas`
-        Siswa::create([
-            'nama' => $validated['name'],
-            'nis' => $validated['nis'],
-            'gender' => $validated['gender'],
-            'alamat' => $validated['alamat'],
-            'kontak' => $validated['kontak'],
-            'email' => $validated['email'],
-            'foto' => $fotoPath,
-        ]);
-
         event(new Registered($user));
 
         Auth::login($user);
 
-        $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
+        $this->redirectRoute('dashboard');
+        //$this->redirectIntended(route('dashboard', absolute: false), navigate: true);
     }
-};
-?>
+}; ?>
 
 <div class="flex flex-col gap-6">
     <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
@@ -102,119 +101,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             autocomplete="email"
             placeholder="email@example.com"
         />
-        
-        <!-- NIS -->
-        <flux:input
-            wire:model="nis"
-            id="nis"
-            type="text"
-            required
-            placeholder="{{ __('Masukkan Nomor Induk Siswa') }}"
-            :label="__('NIS')"
-        />
-            @error('nis')
-                <p class="text-red-500 text-sm mt-1 flex items-center">
-                    <i class="fas fa-exclamation-circle mr-1"></i>
-                    {{ $message }}
-                </p>
-            @enderror
-
-                <!-- gender -->
-        <flux:select 
-            wire:model="gender" 
-            id="gender" 
-            required :label="__('Jenis Kelamin')">
-            <option value="">{{ __('Pilih Jenis Kelamin') }}</option>
-            <option value="L">{{ __('Laki-laki') }}</option>
-            <option value="P">{{ __('Perempuan') }}</option>
-        </flux:select>
-
-        @error('gender')
-            <p class="text-red-500 text-sm mt-1 flex items-center">
-                <i class="fas fa-exclamation-circle mr-1"></i>
-                    {{ $message }}
-            </p>
-         @enderror
-
-        <!-- Alamat -->
-        <flux:input
-            wire:model="alamat"
-            id="alamat"
-            :label="__('Alamat')"
-            type="text"
-            required
-            placeholder="Masukkan alamat lengkap "
-        />
-
-         @error('alamat')
-            <p class="text-red-500 text-sm mt-1 flex items-center">
-                <i class="fas fa-exclamation-circle mr-1"></i>
-                                    {{ $message }}
-            </p>
-        @enderror
-
-                <!-- Kontak -->
-        <flux:input
-            wire:model="kontak"
-            id="kontak"
-            :label="__('Kontak')"
-            type="tel"
-            required
-            placeholder="Masukkan nomor telepon/HP (contoh: 08123456789)"
-        />
-
-         @error('alamat')
-            <p class="text-red-500 text-sm mt-1 flex items-center">
-                <i class="fas fa-exclamation-circle mr-1"></i>
-                                    {{ $message }}
-            </p>
-        @enderror
-
-        <!-- Foto -->
-        <div class="space-y-2">
-            <label for="foto" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                <i class="fas fa-camera text-indigo-500 mr-2"></i>
-                {{ __('Foto Siswa') }} 
-            </label>
-            <div class="flex items-center justify-center w-full">
-                <label for="foto" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 transition duration-200">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        @if ($foto)
-                            <div class="text-center">
-                                <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
-                                    <span class="font-semibold">{{ $foto->getClientOriginalName() }}</span>
-                                </p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">
-                                    {{ round($foto->getSize() / 1024, 2) }} KB
-                                </p>
-                            </div>
-                        @else
-                            <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-2"></i>
-                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                <span class="font-semibold">{{ __('Klik untuk upload') }}</span> {{ __('atau drag and drop') }}
-                            </p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, JPEG (MAX. 2MB)</p>
-                        @endif
-                    </div>
-                    <input 
-                        wire:model="foto" 
-                        id="foto" 
-                        type="file" 
-                        class="hidden" 
-                        accept="image/png,image/jpg,image/jpeg"
-                        required
-                    />
-                </label>
-            </div>
-            @error('foto')
-                <p class="text-red-500 text-sm mt-1 flex items-center">
-                    <i class="fas fa-exclamation-circle mr-1"></i>
-                    {{ $message }}
-                </p>
-            @enderror
-        </div>
-
+                  
         <!-- Password -->
         <flux:input
             wire:model="password"

@@ -20,25 +20,12 @@ Route::get('/siswa', function () {
  ->name('siswa');
 
 
-//membuat peraturan role siswa dapat akses fe
-// Route::middleware(['auth', 'verified', 'role:siswa ', 'cek_usesrs'])->group(function () {
-//     Route::view('dashboard', 'dashboard')->name('dashboard');
-//     Route::view('industri', 'industri')->name('industri');
-// });
-
 Route::middleware(['auth', 'verified', 'role:siswa', 'cek_usesrs'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('pkl', 'pkl')->name('pkl');
     Route::view('industri', 'industri')->name('industri');
 });
 
-
-
-// Route::middleware(['auth', 'verified', 'role:guru', 'cek_guru'])->group(function () {
-//    Route::get('/guru', function (){
-//     return "Guru";
-//    })->name('login'); 
-// });
 
 
 

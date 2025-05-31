@@ -18,7 +18,6 @@ class Index extends Component
     public $isOpen = 0;
     public $editMode = false;
     public $editingId = null;
-    public $pklIdToDelete = null;
 
     use WithPagination;
 
@@ -182,22 +181,12 @@ class Index extends Component
         $this->openModal();
     }
 
-    public function setPklIdToDelete($id)
+
+    public function confirmDelete($id)
     {
-        $this->pklIdToDelete = $id;
-        $this->dispatch('open-modal');
-    }
+        $pkl = Pkl::findOrFail($id);
 
-
-    public function confirmDelete()
-    {
-        if (!$this->pklIdToDelete) {
-            session()->flash('error', 'Tidak ada data yang dipilih untuk dihapus.');
-            return;
-        }
-
-        $pkl = Pkl::findOrFail($this->pklIdToDelete);
-
+        // Pastikan hanya siswa yang bersangkutan yang bisa hapus
         if ($pkl->siswa_id !== $this->siswa_login->id) {
             session()->flash('error', 'Anda tidak memiliki izin untuk menghapus data ini.');
             return;
@@ -213,15 +202,13 @@ class Index extends Component
 
             DB::commit();
             session()->flash('success', 'Data PKL berhasil dihapus.');
-            $this->dispatch('close-modal');
 
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
         }
-
-        $this->pklIdToDelete = null; // Reset agar aman
     }
+
  // Method untuk debugging - hapus setelah selesai
 
 }

@@ -141,7 +141,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             wire:model="alamat"
             id="alamat"
             :label="__('Alamat')"
-            type="email"
+            type="text"
             required
             placeholder="Masukkan alamat lengkap "
         />

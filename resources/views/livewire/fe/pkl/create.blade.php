@@ -26,7 +26,7 @@
               {{-- <input type="text" value="{{ $siswa_login->nama }}">
               <input wire:model="siswaId" type="text" name="nama" value="{{ $siswa_login->id }}" readonly> --}}
               <select wire:model="siswaId">
-                <option value="">Pilih Siswa</option>
+                <option value=""> Siswa</option>
                   
                 {{-- @foreach ($siswa as $s) --}}
                   <option value="{{ $siswa_login->id }}">{{ $siswa_login->nama }}</option>

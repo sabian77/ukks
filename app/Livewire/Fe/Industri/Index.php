@@ -15,6 +15,8 @@ class Index extends Component
     public $isOpen = false;
     public $rowPerPage = 10;
     public $search;
+    public $editMode = false;
+    public $editingId = null;
 
     protected $listeners = ['industriCreated' => 'render']; // Menambahkan listener
 
@@ -71,39 +73,85 @@ class Index extends Component
         DB::beginTransaction();
 
         try {
-            // Cek apakah nama industri sudah ada
-            $exists = Industri::where('nama', $this->nama)->exists();
-
-            if ($exists) {
+            // Cek apakah nama industri sudah ada (untuk create saja)
+            if (!$this->editMode && Industri::where('nama', $this->nama)->exists()) {
                 DB::rollBack();
-                return redirect()->route('industri')->with('error', "Nama industri sudah ada di database!");
-                // session()->flash('error', 'Gagal: Nama industri sudah terdaftar.');
+                session()->flash('error', "Nama industri sudah ada di database!");
                 return;
             }
 
-            $industri = Industri::create([
-                'nama' => $this->nama,
-                'bidang_usaha' => $this->bidang_usaha,
-                'alamat' => $this->alamat,
-                'kontak' => $this->kontak,
-                'email' => $this->email,
-                'website' => $this->website,
-            ]);
+            if ($this->editMode) {
+                $industri = Industri::findOrFail($this->editingId);
+                $industri->update([
+                    'nama' => $this->nama,
+                    'bidang_usaha' => $this->bidang_usaha,
+                    'alamat' => $this->alamat,
+                    'kontak' => $this->kontak,
+                    'email' => $this->email,
+                    'website' => $this->website,
+                ]);
+
+                $message = 'Data industri berhasil diupdate!';
+            } else {
+                $industri = Industri::create([
+                    'nama' => $this->nama,
+                    'bidang_usaha' => $this->bidang_usaha,
+                    'alamat' => $this->alamat,
+                    'kontak' => $this->kontak,
+                    'email' => $this->email,
+                    'website' => $this->website,
+                ]);
+
+                $message = 'Data industri berhasil disimpan!';
+            }
 
             DB::commit();
 
             $this->resetInputFields();
-            //session()->flash('success', 'Data industri berhasil disimpan!');
-            $Namaindustri = $industri->nama;
-            return redirect()->route('industri')->with('success', "  berhasil menyimpan $Namaindustri di tabel industri!");
+            $this->editMode = false; // reset edit mode
             $this->closeModal();
 
-            // Emit event untuk memberitahu bahwa industri telah dibuat
-            $this->emit('industriCreated'); // Emit event setelah menyimpan
+            session()->flash('success', $message);
+
+            /// Emit event setelah menyimpan
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('industri')->with('error', "terjadi kesalahan: " . $e->getMessage());
-            // session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            session()->flash('error', "Terjadi kesalahan: " . $e->getMessage());
         }
     }
+
+
+
+    public function edit($id)
+    {
+        $industri = Industri::findOrFail($id);
+
+        //memasukan field edit ke database
+        $this->editingId = $id;
+        $this->nama = $industri->nama;
+        $this->bidang_usaha = $industri->bidang_usaha;
+        $this->alamat = $industri->alamat;
+        $this->kontak = $industri->kontak;
+        $this->email = $industri->email;
+        $this->website = $industri->website;
+
+        //membuka modal
+        $this->editMode = true;
+        $this->openModal();
+    }
+
+    public function delete($id)
+{
+    try {
+        $industri = Industri::findOrFail($id);
+        $industri->delete();
+
+        session()->flash('success', "Data industri berhasil dihapus!");
+        // Kalau ingin reload datanya, bisa juga emit event
+        $this->emit('industriDeleted');
+    } catch (\Exception $e) {
+        session()->flash('error', "Terjadi kesalahan saat menghapus: " . $e->getMessage());
+    }
+}
+
 }

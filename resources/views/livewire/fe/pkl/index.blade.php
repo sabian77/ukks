@@ -28,6 +28,32 @@
     </div>
     {{-- ./Tampilan Pesan --}}
 
+    
+{{-- Konfirmasi Hapus --}}
+@if($pklIdToDelete)
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    {{-- Overlay Background Semi-Transparan --}}
+    <div class="absolute inset-0  bg-opacity-50 backdrop-blur-sm"></div>
+
+    {{-- Modal Box --}}
+    <div class="relative bg-white border border-black rounded-lg p-6 w-80 shadow-2xl transition transform scale-100 animate-fade-in">
+      <h2 class="text-lg font-semibold mb-4 text-gray-800">Konfirmasi Hapus</h2>
+      <p class="text-gray-700">Apakah Anda yakin ingin menghapus data PKL ini?</p>
+      <div class="flex justify-end mt-4">
+        <button wire:click="$set('pklIdToDelete', null)"
+                class="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 mr-2 transition duration-200">
+          Batal
+        </button>
+        <button wire:click="confirmDelete"
+                class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">
+          Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+@endif
+
+
     {{-- Judul --}}
     <div class="w-full bg-gray-200 p-4 text-center text-2xl font-bold text-gray-700">
       Siswa PKL
@@ -59,15 +85,15 @@
       <table class="min-w-full bg-white border border-gray-200">
         <thead>
           <tr>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">No</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Nama Siswa</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Industri</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Bidang Usaha</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Guru Pembimbing</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Mulai</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Selesai</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Durasi (Hari)</th>
-            <th class="px-4 py-2 border-b border-gray-200 text-left text-gray-600">Action</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">No</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Nama Siswa</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Industri</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Bidang Usaha</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Guru Pembimbing</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Mulai</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Selesai</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Durasi (Hari)</th>
+            <th class="px-6 py-2 border-b border-gray-200 text-left text-gray-600">Action</th>
           </tr>
         </thead>
 
@@ -110,12 +136,10 @@
                       </svg>
                       Edit
                     </button>
-
-                    {{-- Tombol Delete tanpa konfirmasi --}}
-                  <button wire:click="confirmDelete({{ $pkl->id }})"
-                          class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200 text-sm">
-                      Delete
-                  </button>
+                    <button wire:click="setPklIdToDelete({{ $pkl->id }})"
+                            class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">
+                        Delete
+                    </button>
                   </div>
                 @else
                   <span class="text-gray-400 text-sm">-</span>

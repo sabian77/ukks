@@ -77,9 +77,6 @@
                 <button wire:click="edit({{ $industri->id }})" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 mr-2">
                   Edit
                 </button>
-                <button wire:click="delete({{ $industri->id }})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200">
-                  Hapus
-                </button>
               </td>
             </tr>
           @endforeach

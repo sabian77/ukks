@@ -7,6 +7,7 @@ use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Industri;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use Livewire\Volt\Compilers\Mount;
@@ -101,7 +102,7 @@ class Index extends Component
             $siswa = Siswa::find($this->siswaId);
 
             // Cek status PKL untuk create baru
-            if (!$this->editMode && $siswa->status_lapor_pkl) {
+            if (!$this->editMode && $siswa->status_pkl) {
                 DB::rollBack();
                 $this->closeModal();
                 session()->flash('error', 'Transaksi dibatalkan: Siswa sudah melapor.');
@@ -140,7 +141,7 @@ class Index extends Component
                 ]);
 
                 // Update status_lapor siswa
-                $siswa->update(['status_lapor_pkl' => 1]);
+                $siswa->update(['status_pkl' => 1]);
                 
                 $siswanama = $siswa->nama;
                 $message = "Data PKL berhasil disimpan dan status $siswanama lapor pkl!";
@@ -208,8 +209,10 @@ class Index extends Component
         try {
             $siswa = Siswa::find($pkl->siswa_id);
             if ($siswa) {
+                Log::info('Before update:', ['status_pkl' => $siswa->status_pkl]);
                 $pkl->delete();
-                $siswa->update(['status_lapor_pkl' => 0]);
+                $siswa->update(['status_pkl' => 0]);
+                Log::info('After update:', ['status_pkl' => $siswa->status_pkl]);
             }
 
             DB::commit();
@@ -218,6 +221,7 @@ class Index extends Component
             DB::rollBack();
             session()->flash('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
         }
+
 
         $this->pklIdToDelete = null;
     }

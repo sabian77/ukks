@@ -3,6 +3,7 @@
 namespace App\Livewire\Fe\Industri;
 
 use App\Models\Industri;
+use App\Models\Pkl;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -139,19 +140,5 @@ class Index extends Component
         $this->editMode = true;
         $this->openModal();
     }
-
-    public function delete($id)
-{
-    try {
-        $industri = Industri::findOrFail($id);
-        $industri->delete();
-
-        session()->flash('success', "Data industri berhasil dihapus!");
-        // Kalau ingin reload datanya, bisa juga emit event
-        $this->emit('industriDeleted');
-    } catch (\Exception $e) {
-        session()->flash('error', "Terjadi kesalahan saat menghapus: " . $e->getMessage());
-    }
-}
 
 }

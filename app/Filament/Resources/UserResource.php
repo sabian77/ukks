@@ -42,8 +42,11 @@ class UserResource extends Resource
                     ->searchable(),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
-                    ->maxLength(8),
+                    ->required(fn (string $operation): bool => $operation === 'create')
+                    ->maxLength(255) // Ubah dari 8 ke 255 untuk keamanan yang lebih baik
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->visible(fn (string $operation): bool => $operation === 'create')
+                    ->helperText('Password hanya dapat diatur saat membuat user baru'),
             ]);
     }
 

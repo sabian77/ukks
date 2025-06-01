@@ -1,6 +1,18 @@
-<?php
-
+<?php 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication Settings
+    |--------------------------------------------------------------------------
+    |
+    | These settings determine how authentication works in Filament.
+    |
+    */
+
+    'auth' => [
+        'logout_redirect' => '/login', // 🔥 Redirect ke halaman login Livewire
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -45,57 +57,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Assets Path
-    |--------------------------------------------------------------------------
-    |
-    | This is the directory where Filament's assets will be published to. It
-    | is relative to the `public` directory of your Laravel application.
-    |
-    | After changing the path, you should run `php artisan filament:assets`.
-    |
-    */
-
-    'assets_path' => null,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache Path
-    |--------------------------------------------------------------------------
-    |
-    | This is the directory that Filament will use to store cache files that
-    | are used to optimize the registration of components.
-    |
-    | After changing the path, you should run `php artisan filament:cache-components`.
-    |
-    */
-
-    'cache_path' => base_path('bootstrap/cache/filament'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Livewire Loading Delay
     |--------------------------------------------------------------------------
     |
     | This sets the delay before loading indicators appear.
     |
-    | Setting this to 'none' makes indicators appear immediately, which can be
-    | desirable for high-latency connections. Setting it to 'default' applies
-    | Livewire's standard 200ms delay.
-    |
     */
 
     'livewire_loading_delay' => 'default',
-
-    /*
-    |--------------------------------------------------------------------------
-    | System Route Prefix
-    |--------------------------------------------------------------------------
-    |
-    | This is the prefix used for the system routes that Filament registers,
-    | such as the routes for downloading exports and failed import rows.
-    |
-    */
-
-    'system_route_prefix' => 'filament',
 
 ];

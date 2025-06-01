@@ -91,62 +91,24 @@ class SiswaController extends Controller
 
 public function update(Request $request, string $id)
 {
-    // Temukan siswa berdasarkan ID
+    //berdasar id
     $siswa = Siswa::find($id);
+    $siswa->nama = $request->nama ?? $siswa->nama;
+    $siswa->nis = $request->nis ?? $siswa->nis;
+    $siswa->gender = $request->gender ?? $siswa->gender;
+    $siswa->alamat = $request->alamat ?? $siswa->alamat;
+    $siswa->kontak = $request->kontak ?? $siswa->kontak;
+    $siswa->email = $request->email ?? $siswa->email;
+    $siswa->status_pkl = $request->status_pkl ?? $siswa->status_pkl;
 
-    if (!$siswa) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Siswa tidak ditemukan!',
-        ], 404);
-    }
-
-    // Validasi
-    $validator = Validator::make($request->all(), [
-        'nama' => 'required',
-        'nis' => 'required',
-        'gender' => 'required',
-        'alamat' => 'required',
-        'kontak' => 'required',
-        'email' => 'required|email',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'status_pkl' => 'nullable',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Validasi gagal! Silakan cek kembali input Anda.',
-            'errors' => $validator->errors()
-        ], 422);
-    }
-
-    // Tangani Foto
-    if ($request->hasFile('foto')) {
-        $foto = $request->file('foto');
-        $fotoPath = $foto->storeAs('public/siswa', $foto->hashName());
-
-        // Hapus foto lama jika ada
-        if ($siswa->foto) {
-            Storage::delete('public/siswa/' . $siswa->foto);
-        }
-
-        $siswa->foto = $foto->hashName();
-    }
-
-    // Perbarui data lain
-    $siswa->fill($request->except(['foto']));
     $siswa->save();
 
     return response()->json([
         'success' => true,
         'message' => 'Data Siswa Berhasil Diupdate!',
         'siswa' => $siswa
-    ], 200);
+    ]);
 }
-
-
-
 
     /**
      * Remove the specified resource from storage.

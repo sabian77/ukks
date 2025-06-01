@@ -19,5 +19,4 @@ Route::apiResource('/guru', GuruController::class);
 Route::apiResource('/industri', IndustriController::class);
 Route::apiResource('/pkl', PklController::class);
 Route::apiResource('/siswa', SiswaController::class);
-Route::put('/siswa/{id}', [SiswaController::class, 'update']);
 

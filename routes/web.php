@@ -13,6 +13,7 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 
+
 //membuat ujicoba dengan role siswa dapat akses fe
 Route::get('/siswa', function () {
     return "Siswa";

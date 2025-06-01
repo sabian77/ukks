@@ -1,6 +1,9 @@
 <div class="py-24">
   {{-- Card --}}
   <div class="mx-auto bg-white rounded-lg shadow-lg overflow-hidden px-6 py-6">
+    <div wire:poll.10000ms> <!-- refresh setiap 10detik -->
+    </div>
+
 
     {{-- Tampilan Pesan --}}
     <div>
